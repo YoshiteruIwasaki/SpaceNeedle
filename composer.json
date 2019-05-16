@@ -1,12 +1,13 @@
 {
-    "name": "laravel/laravel",
+    "name": "neeton/SpaceNeedle",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "laravel x Nuxt で作る画像掲示板",
     "keywords": [
         "framework",
-        "laravel"
+        "laravel",
+        "Nuxt"
     ],
-    "license": "MIT",
+    "license": "Apache License 2.0",
     "require": {
         "php": "^7.1.3",
         "fideloper/proxy": "^4.0",
