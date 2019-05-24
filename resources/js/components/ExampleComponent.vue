@@ -6,6 +6,9 @@
                 <p>{{ message }}</p>
                 <button @click="editButton" class="btn btn-primary">edit</button>
             </div>
+
+    <button @click="getUser">Am I logged in?</button>
+    <p v-if="user != []">{{ user.id }} : {{ user.name }}</p>
         </div>
     </div>
 </template>
@@ -18,7 +21,9 @@ export default {
   data() {
     return {
       title: "Laravel + Vue.js",
-      message: "Initialize"
+      message: "Initialize",
+
+    user: [],
     };
   },
   methods: {
@@ -26,7 +31,18 @@ export default {
       alert("edit");
       this.title = "Welcome to Vue.js!";
       this.message = "This is a sample application.";
-    }
+  },
+    getUser: function() {
+      axios.get("/api/user")
+      .then(res => {
+        alert('Welcome, ' + response.data.name + '!!');
+        console.log(response.data);
+        this.user = response.data;
+      })
+      .catch(
+        alert('Sorry, you are not logged in.'),
+      );
+    },
   }
 };
 </script>

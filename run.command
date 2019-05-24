@@ -34,3 +34,7 @@ npm run watch
 ###  php artisan route:clear
 ###  php artisan view:clear
 ###  php artisan key:generate
+
+
+###  php artisan route:list
+###  phpunit --testdox
