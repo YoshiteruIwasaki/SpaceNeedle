@@ -23,6 +23,8 @@ class LogoutApiTest extends PassportTestCase
         $response = $this->withHeaders($this->headersWithToken)
                        ->json('POST', '/api/logout');
 
+        //Log::error(print_r($response));
+
         $response->assertStatus(200);
     }
 }

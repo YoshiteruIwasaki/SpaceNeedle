@@ -22,3 +22,7 @@ Route::middleware('throttle')->post('/login', '\Laravel\Passport\Http\Controller
 
 // ログアウト
 Route::middleware('auth:api')->post('/logout', 'Auth\LogoutController@logout')->name('logout');
+//Route::middleware('auth:api')->post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+// 会員登録
+Route::post('/register', 'Auth\RegisterController@register')->name('register');

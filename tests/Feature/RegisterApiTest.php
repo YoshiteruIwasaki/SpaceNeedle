@@ -3,38 +3,58 @@
 namespace Tests\Feature;
 
 use App\User;
-use Tests\PassportTestCase;
+use Tests\PassportRegisterTestCase;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 
-class RegisterApiTest extends TestCase
-//class RegisterApiTest extends PassportTestCase
+class RegisterApiTest extends PassportRegisterTestCase
 {
     /**
      * A basic feature test example.
      *
+     * @return void
      */
     public function testCreateUser()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-        /*
-        $data = [
+        $response = $this->json('POST', '/api/register', [
+            'client_id' => (string) $this->client->id,
+            'client_secret' => $this->client->secret,
             'name' => 'vuesplash user',
             'email' => 'dummy@email.com',
             'password' => 'test1234',
             'password_confirmation' => 'test1234',
-        ];
+            'grant_type' => 'password',
+            'scope' => '*'
+        ]);
 
-        $response = $this->json('POST', '/api/register', $data);
+        $response->assertStatus(201)
+            ->assertJson([
+                'created_at' => true,
+            ]);
+    }
 
-        $response
-                    ->assertStatus(201)
-                    ->assertJson([
-                        'created_at' => true,
-                    ]);
-                    */
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testCreateUserFail()
+    {
+        $response = $this->json('POST', '/api/register', [
+                'client_id' => (string) $this->client->id,
+                'client_secret' => $this->client->secret,
+                'name' => 'vuesplash user',
+                //'email' => 'dummy@email.com',
+                'password' => 'test1234',
+                'password_confirmation' => 'test1234',
+                'grant_type' => 'password',
+                'scope' => '*'
+            ]);
+
+        $response->assertStatus(422);
     }
 }
