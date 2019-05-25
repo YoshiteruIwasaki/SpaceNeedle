@@ -23,14 +23,16 @@ module.exports = {
   // required to lint *.vue files
   plugins: [
     'vue',
+    'prettier',
   ],
   // add your custom rules here
   rules: {
-    "no-unused-vars": 0,
-    "no-console": 0,
-  //  "import/extensions": "off",
+    'no-unused-vars': 0,
+    'no-console': 0,
+    'no-param-reassign': 0,
+    //  "import/extensions": "off",
     'import/no-unresolved': 'off',
-    'import/no-extraneous-dependencies': 'off'
+    'import/no-extraneous-dependencies': 'off',
   },
   settings: {
     'import/core-modules': [

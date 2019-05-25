@@ -21,14 +21,14 @@ class RegisterApiTest extends PassportRegisterTestCase
     public function testCreateUser()
     {
         $response = $this->json('POST', '/api/register', [
-            'client_id' => (string) $this->client->id,
-            'client_secret' => $this->client->secret,
+          //  'client_id' => (string) $this->client->id,
+          //  'client_secret' => $this->client->secret,
             'name' => 'vuesplash user',
             'email' => 'dummy@email.com',
             'password' => 'test1234',
             'password_confirmation' => 'test1234',
-            'grant_type' => 'password',
-            'scope' => '*'
+          //  'grant_type' => 'password',
+          //  'scope' => '*'
         ]);
 
         $response->assertStatus(201)
@@ -45,14 +45,14 @@ class RegisterApiTest extends PassportRegisterTestCase
     public function testCreateUserFail()
     {
         $response = $this->json('POST', '/api/register', [
-                'client_id' => (string) $this->client->id,
-                'client_secret' => $this->client->secret,
+            //    'client_id' => (string) $this->client->id,
+            //    'client_secret' => $this->client->secret,
                 'name' => 'vuesplash user',
-                //'email' => 'dummy@email.com',
-                'password' => 'test1234',
-                'password_confirmation' => 'test1234',
-                'grant_type' => 'password',
-                'scope' => '*'
+                'email' => 'dummy@email.com',
+                'password' => 'a',
+                'password_confirmation' => 'a',
+            //    'grant_type' => 'password',
+            //    'scope' => '*'
             ]);
 
         $response->assertStatus(422);
