@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -5,12 +7,13 @@
  */
 
 
-import Vue from 'vue'
+import Vue from 'vue';
 
 // ルーティングの定義をインポートする
-import router from './router'
+import router from './router';
+
 // ルートコンポーネントをインポートする
-import App from './App.vue'
+import App from './App.vue';
 
 require('./bootstrap');
 
@@ -27,22 +30,22 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-Vue.component(
-    'passport-clients',
-    require('./components/passport/Clients.vue').default
-);
+// Vue.component(
+//    'passport-clients',
+//    require('./components/passport/Clients.vue').default
+// );
 
-Vue.component(
-    'passport-authorized-clients',
-    require('./components/passport/AuthorizedClients.vue').default
-);
+// Vue.component(
+//    'passport-authorized-clients',
+//    require('./components/passport/AuthorizedClients.vue').default
+// );
 
-Vue.component(
-    'passport-personal-access-tokens',
-    require('./components/passport/PersonalAccessTokens.vue').default
-);
+// Vue.component(
+//    'passport-personal-access-tokens',
+//    require('./components/passport/PersonalAccessTokens.vue').default
+// );
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -51,7 +54,7 @@ Vue.component(
  */
 
 const app = new Vue({
-    el: '#app',
+  el: '#app',
   router, // ルーティングの定義を読み込む
   components: { App }, // ルートコンポーネントの使用を宣言する
   template: '<App />', // ルートコンポーネントを描画する
