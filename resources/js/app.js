@@ -6,19 +6,16 @@
 
 
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+
+// ルーティングの定義をインポートする
+import router from './router'
+// ルートコンポーネントをインポートする
+import App from './App.vue'
 
 require('./bootstrap');
 
 window.Vue = require('vue');
 
-Vue.use(VueRouter)
-  const router = new VueRouter({
-   mode: 'history',
-   routes: [
-     { path: '/', component: require('./components/ExampleComponent.vue') },
-   ]
- })
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -32,7 +29,6 @@ Vue.use(VueRouter)
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-/**
 Vue.component(
     'passport-clients',
     require('./components/passport/Clients.vue').default
@@ -47,7 +43,6 @@ Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue').default
 );
-*/
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -56,6 +51,8 @@ Vue.component(
  */
 
 const app = new Vue({
-    router,
     el: '#app',
+  router, // ルーティングの定義を読み込む
+  components: { App }, // ルートコンポーネントの使用を宣言する
+  template: '<App />', // ルートコンポーネントを描画する
 });
