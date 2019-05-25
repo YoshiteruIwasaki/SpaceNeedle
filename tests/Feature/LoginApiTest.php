@@ -20,9 +20,9 @@ class LoginApiTest extends PassportLoginTestCase
      */
     public function testLogin()
     {
-        $response = $this->json('POST', '/oauth/token', [
-            'client_id' => (string) $this->client2->id,
-            'client_secret' => $this->client2->secret,
+        $response = $this->json('POST', '/api/login', [
+            'client_id' => (string) $this->client->id,
+            'client_secret' => $this->client->secret,
             'username' => $this->user->email,
             'password' => 'secret',
             'grant_type' => 'password',
@@ -31,5 +31,20 @@ class LoginApiTest extends PassportLoginTestCase
 
         $response
             ->assertStatus(200);
+    }
+
+    public function testLoginFail()
+    {
+        $response = $this->json('POST', '/api/login', [
+            'client_id' => (string) $this->client->id,
+            'client_secret' => $this->client->secret,
+            'username' => $this->user->email,
+            'password' => 'aaaaaa',
+            'grant_type' => 'password',
+            'scope' => '*'
+        ]);
+
+        $response
+            ->assertStatus(401);
     }
 }

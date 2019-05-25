@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use DB;
 use Closure;
 
 class RequestMiddleware
@@ -25,5 +26,10 @@ class RequestMiddleware
     {
         $query = collect($request->all())->except("q")->all();
         \Log::debug($request->method(), ["path" => $request->query("q", "/"), "query" => http_build_query($query)]);
+
+        // 商用環境以外だった場合、SQLログを出力する
+        DB::listen(function ($query) {
+            \Log::debug("Query Time:{$query->time}s] $query->sql");
+        });
     }
 }

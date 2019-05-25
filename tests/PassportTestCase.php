@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 
-class PassportLoginTestCase extends TestCase
+class PassportTestCase extends TestCase
 {
     use RefreshDatabase;
     //use DatabaseTransactions;
@@ -34,5 +34,19 @@ class PassportLoginTestCase extends TestCase
 
         // ユーザーをDBに作成
         $this->user = factory(User::class)->create();
+
+        $response = $this->json('POST', '/api/login', [
+                'client_id' => (string) $this->client->id,
+                'client_secret' => $this->client->secret,
+                'username' => $this->user->email,
+                'password' => 'secret',
+                'grant_type' => 'password',
+                'scope' => '*'
+            ]);
+
+        $array = $response->json();
+        // リクエストのヘッダーを設定
+        $this->headersWithToken['Authorization'] = 'Bearer '.$array['access_token'];
+        $this->headersWithToken['Accept'] = 'application/json';
     }
 }
