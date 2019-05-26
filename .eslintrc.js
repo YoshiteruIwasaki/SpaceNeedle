@@ -27,12 +27,16 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
-    'no-unused-vars': 0,
-    'no-console': 0,
-    'no-param-reassign': 0,
+    'no-unused-vars': [0],
+    'no-console': [0],
+    'no-param-reassign': [0],
     //  "import/extensions": "off",
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
+    // タグの最後で改行しないで
+    'vue/html-closing-bracket-newline': [2, { multiline: 'never' }],
+    'vue/max-attributes-per-line': [0],
+    'vue/require-v-for-key': [0],
   },
   settings: {
     'import/core-modules': [

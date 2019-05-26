@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
@@ -26,6 +28,11 @@ const router = new VueRouter({
   mode: 'history', // ★ 追加
   routes,
 });
+
+const getters = {
+  check: state => !!state.user,
+  username: state => (state.user ? state.user.name : ''),
+};
 
 // VueRouterインスタンスをエクスポートする
 // app.jsでインポートするため
