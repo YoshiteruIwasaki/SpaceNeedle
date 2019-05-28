@@ -2,7 +2,12 @@ import axios from 'axios';
 
 const state = { user: null, token: null };
 
-const getters = {};
+
+const getters = {
+  check: state => !!state.user,
+  username: state => (state.user ? state.user.name : ''),
+  accessToken: state => (state.token ? state.token.access_token : ''),
+};
 
 const mutations = {
   setUser(state, user) {
@@ -25,6 +30,16 @@ const actions = {
     data.scope = '*';
     const response = await axios.post('/api/login', data);
     context.commit('setAccessToken', response.data);
+  },
+  async user(context) {
+    const response = await axios.get('/api/user', {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${state.token.access_token}`,
+      },
+      data: {},
+    });
+    context.commit('setUser', response.data);
   },
   async logout(context) {
     const response = await axios.post('/api/logout');

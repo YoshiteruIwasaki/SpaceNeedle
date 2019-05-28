@@ -29,11 +29,6 @@ const router = new VueRouter({
   routes,
 });
 
-const getters = {
-  check: state => !!state.user,
-  username: state => (state.user ? state.user.name : ''),
-};
-
 // VueRouterインスタンスをエクスポートする
 // app.jsでインポートするため
 export default router;
