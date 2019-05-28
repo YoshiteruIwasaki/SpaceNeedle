@@ -18,9 +18,7 @@ class PasswordGrantClientMiddleware
     public function handle($request, Closure $next)
     {
         $client = Client::where('password_client', 1)->first();
-
         View::share('client', $client);
-
         return $next($request);
     }
 }

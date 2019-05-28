@@ -37,13 +37,18 @@ const actions = {
         Accept: 'application/json',
         Authorization: `Bearer ${state.token.access_token}`,
       },
-      data: {},
     });
     context.commit('setUser', response.data);
   },
   async logout(context) {
-    const response = await axios.post('/api/logout');
+    const response = await axios.post('/api/logout', {}, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${state.token.access_token}`,
+      },
+    });
     context.commit('setUser', null);
+    context.commit('setAccessToken', null);
   },
 };
 

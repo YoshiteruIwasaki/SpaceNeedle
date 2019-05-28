@@ -11,26 +11,13 @@ use Illuminate\Support\Facades\DB;
 
 class PassportTestCase extends TestCase
 {
-    use RefreshDatabase;
-    //use DatabaseTransactions;
-
     protected $headersWithToken = [];
     protected $scopes = [];
     protected $user;
-    protected $client;
 
     public function setUp(): void
     {
         parent::setUp();
-
-        // Password Grant ClientをDBに作成
-        $clientRepository = new ClientRepository();
-
-        $this->client = $clientRepository->createPasswordGrantClient(
-            null,
-            'Test Password Grant Client',
-            url('/')
-        );
 
         // ユーザーをDBに作成
         $this->user = factory(User::class)->create();
