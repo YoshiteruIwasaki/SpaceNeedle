@@ -13,7 +13,7 @@ Register
 <div v-show="tab === 1" class="panel">
 <form class="form" @submit.prevent="login">
 <label for="login-email">Email</label>
-<input id="login-email" v-model="loginForm.email" type="text" class="form__item">
+<input id="login-email" v-model="loginForm.username" type="text" class="form__item">
 <label for="login-password">Password</label>
 <input id="login-password" v-model="loginForm.password" type="password" class="form__item">
     <div class="form__button">
@@ -51,7 +51,7 @@ export default {
     return {
       tab: 1,
       loginForm: {
-        email: '',
+        username: '',
         password: '',
       },
       registerForm: {

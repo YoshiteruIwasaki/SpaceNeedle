@@ -18,6 +18,7 @@
         <!-- CSRF Token -->
         <script>
             window.Laravel = {csrfToken: "{{ csrf_token() }}"};
+            window.Client =  {id: {{ $client->id }},secret: "{{$client->secret}}"};
         </script>
     </head>
     <body>
