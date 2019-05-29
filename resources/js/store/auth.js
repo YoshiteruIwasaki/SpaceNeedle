@@ -1,7 +1,5 @@
 import axios from 'axios';
-
-const state = { user: null, token: null };
-
+import Cookies from 'js-cookie';
 
 const getters = {
   check: state => !!state.user,
@@ -18,6 +16,8 @@ const mutations = {
   },
 };
 
+const state = { user: null, token: null };
+
 const actions = {
   async register(context, data) {
     const response = await axios.post('/api/register', data);
@@ -30,25 +30,26 @@ const actions = {
     data.scope = '*';
     const response = await axios.post('/api/login', data);
     context.commit('setAccessToken', response.data);
+    Cookies.set('access_token', response.data.access_token, { expires: 365, path: '' });
   },
   async user(context) {
     const response = await axios.get('/api/user', {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${state.token.access_token}`,
       },
     });
-    context.commit('setUser', response.data);
+    const user = response.data || null;
+    context.commit('setUser', user);
   },
   async logout(context) {
-    const response = await axios.post('/api/logout', {}, {
+    await axios.post('/api/logout', {}, {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${state.token.access_token}`,
       },
     });
     context.commit('setUser', null);
     context.commit('setAccessToken', null);
+    Cookies.remove('access_token', { path: '' });
   },
 };
 

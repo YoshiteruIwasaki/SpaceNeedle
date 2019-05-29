@@ -3,30 +3,31 @@
 namespace Tests\Feature;
 
 use Tests\PassportTestCase;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\User;
+use Illuminate\Foundation\Testing\WithFaker;
 
-class UserApiTest extends TestCase
+class UserApiTest extends PassportTestCase
 //class UserApiTest extends PassportTestCase
 {
     /**
      * /api/userに対し、認証Tokenありでリクエストするテスト
      */
-    public function testGetApiUserWithTokenInHeaders()
+    public function testGetUser()
     {
-        $response = $this->get('/');
+        $response = $this->get('/api/user', $this->headersWithToken);
 
-        $response->assertStatus(200);
-        //    $this->get('/api/user', $this->headersWithToken)->assertStatus(200);
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'name' => $this->user->name,
+            ]);
     }
     /**
      * /api/userに対し、認証Tokenなしでリクエストするテスト
      */
-    public function testGetApiUserWithOutTokenInHeaders()
+    public function testGetNullUser()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-        //    $this->get('/api/user', $this->headersWithoutToken)->assertStatus(401);
+        $this->get('/api/user', $this->headersWithoutToken)->assertStatus(401);
     }
 }

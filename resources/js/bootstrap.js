@@ -2,7 +2,7 @@
 /* eslint-disable no-multi-assign  */
 /* eslint-disable no-console  */
 
-import { getCookieValue } from './util';
+import Cookies from 'js-cookie';
 
 window._ = require('lodash');
 
@@ -33,7 +33,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.axios.interceptors.request.use((config) => {
   // クッキーからトークンを取り出してヘッダーに添付する
-  config.headers['X-XSRF-TOKEN'] = getCookieValue('XSRF-TOKEN');
+  config.headers['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN');
+
+  return config;
+});
+
+window.axios.interceptors.request.use((config) => {
+  // クッキーからトークンを取り出してヘッダーに添付する
+  const accessToken = Cookies.get('access_token');
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
 
   return config;
 });
@@ -48,7 +58,7 @@ window.axios.interceptors.request.use((config) => {
 const token = window.Laravel.csrfToken;
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
 } else {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 class PassportTestCase extends TestCase
 {
     protected $headersWithToken = [];
+    protected $headersWithoutToken = [];
     protected $scopes = [];
     protected $user;
 
@@ -33,7 +34,9 @@ class PassportTestCase extends TestCase
 
         $array = $response->json();
         // リクエストのヘッダーを設定
-        $this->headersWithToken['Authorization'] = 'Bearer '.$array['access_token'];
+        $this->headersWithoutToken['Accept'] = 'application/json';
+        // リクエストのヘッダーを設定
         $this->headersWithToken['Accept'] = 'application/json';
+        $this->headersWithToken['Authorization'] = 'Bearer '.$array['access_token'];
     }
 }
