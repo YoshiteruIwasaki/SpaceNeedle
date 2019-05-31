@@ -44,6 +44,24 @@ login
 
 <div v-show="tab === 2" class="panel">
   <form class="form" @submit.prevent="register">
+<div v-if="registerErrors" class="errors">
+    <ul v-if="registerErrors.name">
+      <li v-for="msg in registerErrors.name" :key="msg">
+{{ msg }}
+</li>
+    </ul>
+    <ul v-if="registerErrors.email">
+      <li v-for="msg in registerErrors.email" :key="msg">
+{{ msg }}
+</li>
+    </ul>
+    <ul v-if="registerErrors.password">
+      <li v-for="msg in registerErrors.password" :key="msg">
+{{ msg }}
+</li>
+    </ul>
+  </ul>
+</div>
     <label for="username">Name</label>
     <input id="username" v-model="registerForm.name" type="text" class="form__item">
     <label for="email">Email</label>
@@ -87,6 +105,9 @@ export default {
     loginErrors() {
       return this.$store.state.auth.loginErrorMessages;
     },
+    registerErrors() {
+      return this.$store.state.auth.registerErrorMessages;
+    },
   },
   created() {
     this.clearError();
@@ -94,6 +115,7 @@ export default {
   methods: {
     clearError() {
       this.$store.commit('auth/setLoginErrorMessages', null);
+      this.$store.commit('auth/setRegisterErrorMessages', null);
     },
     async login() {
       // authストアのloginアクションを呼び出す
@@ -110,8 +132,13 @@ export default {
       // authストアのresigterアクションを呼び出す
       await this.$store.dispatch('auth/register', this.registerForm);
 
-      // トップページに移動する
-      this.$router.push('/');
+      if (this.apiStatus) {
+      // authストアのuserアクションを呼び出す
+        await this.$store.dispatch('auth/user');
+
+        // トップページに移動する
+        this.$router.push('/');
+      }
     },
   },
 };

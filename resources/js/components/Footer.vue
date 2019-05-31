@@ -12,6 +12,9 @@ Login / Register
 <script>
 export default {
   computed: {
+    apiStatus() {
+      return this.$store.state.auth.apiStatus;
+    },
     isLogin() {
       return this.$store.getters['auth/check'];
     },
@@ -20,7 +23,9 @@ export default {
     async logout() {
       await this.$store.dispatch('auth/logout');
 
-      this.$router.push('/login');
+      if (this.apiStatus) {
+        this.$router.push('/login');
+      }
     },
   },
 };

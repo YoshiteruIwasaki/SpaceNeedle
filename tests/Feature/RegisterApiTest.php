@@ -33,7 +33,7 @@ class RegisterApiTest extends PassportRegisterTestCase
 
         $response->assertStatus(201)
             ->assertJson([
-                'created_at' => true,
+                'access_token' => true,
             ]);
     }
 

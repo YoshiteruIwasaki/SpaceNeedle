@@ -25,6 +25,12 @@ abstract class TestCase extends BaseTestCase
         // Password Grant ClientをDBに作成
         $clientRepository = new ClientRepository();
 
+        $clientRepository->createPersonalAccessClient(
+            null,
+            'Test Personal Access Client',
+            url('/')
+        );
+
         $this->client = $clientRepository->createPasswordGrantClient(
             null,
             'Test Password Grant Client',
