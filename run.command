@@ -4,7 +4,8 @@ cd `dirname $0`
 git pull
 git submodule update -i
 
-cp -af .env.example .env
+## keep APP_KEY in .env file
+## cp -af .env.example .env
 cp -af env-dev-laradock laradock/.env
 
 cd laradock
@@ -33,3 +34,7 @@ npm run watch
 ###  php artisan route:clear
 ###  php artisan view:clear
 ###  php artisan key:generate
+
+
+###  php artisan route:list
+###  phpunit --testdox

@@ -79,3 +79,10 @@ local.properties
 # NuxtJS #
 #######################
 .nuxt
+
+# generated Files #
+#######################
+package-lock.json
+yarn.lock
+public/js/app.js
+public/mix-manifest.json

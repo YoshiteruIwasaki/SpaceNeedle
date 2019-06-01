@@ -16,3 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// ログイン
+Route::middleware('throttle')->post('/login', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken')->name('login');
+
+// ログアウト
+Route::middleware('auth:api')->post('/logout', 'Auth\LogoutController@logout')->name('logout');
+//Route::middleware('auth:api')->post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+// 会員登録
+Route::post('/register', 'Auth\RegisterController@register')->name('register');
