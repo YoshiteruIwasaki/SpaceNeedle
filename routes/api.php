@@ -26,3 +26,6 @@ Route::middleware('auth:api')->post('/logout', 'Auth\LogoutController@logout')->
 
 // 会員登録
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
+
+// 写真投稿
+Route::middleware('auth:api')->post('/photos', 'PhotoController@create')->name('photo.create');
