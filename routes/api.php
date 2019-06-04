@@ -29,3 +29,6 @@ Route::post('/register', 'Auth\RegisterController@register')->name('register');
 
 // 写真投稿
 Route::middleware('auth:api')->post('/photos', 'PhotoController@create')->name('photo.create');
+
+// 写真一覧
+Route::get('/photos', 'PhotoController@index')->name('photo.index');
