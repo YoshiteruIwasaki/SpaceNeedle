@@ -32,3 +32,6 @@ Route::middleware('auth:api')->post('/photos', 'PhotoController@create')->name('
 
 // 写真一覧
 Route::get('/photos', 'PhotoController@index')->name('photo.index');
+
+// 写真詳細
+Route::get('/photos/{id}', 'PhotoController@show')->name('photo.show');

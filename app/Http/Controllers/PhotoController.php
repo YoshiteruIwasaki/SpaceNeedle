@@ -25,6 +25,18 @@ class PhotoController extends Controller
     }
 
     /**
+     * 写真詳細
+     * @param string $id
+     * @return Photo
+     */
+    public function show(string $id)
+    {
+        $photo = Photo::where('id', $id)->with(['owner'])->first();
+
+        return $photo ?? abort(404);
+    }
+
+    /**
      * 写真投稿
      * @param StorePhoto $request
      * @return \Illuminate\Http\Response
