@@ -18,7 +18,7 @@ class PhotoListApiTest extends PassportTestCase
     /**
      * @test
      */
-    public function should_正しい構造のJSONを返却する()
+    public function testPhotoList()
     {
 
         // 5つの写真データを生成する

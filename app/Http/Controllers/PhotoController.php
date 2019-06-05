@@ -36,10 +36,8 @@ class PhotoController extends Controller
 
         $photo = new Photo();
 
-        $uuid = Str::orderedUuid();
         $id = Auth::id();
-        $photo->filename ="photos/{$id}/{$uuid}.{$extension}";
-        Storage::put($photo->filename, $request->photo);
+        $photo->filename =$request->photo->store("photos/{$id}", 'public');
 
         // データベースエラー時にファイル削除を行うため
         // トランザクションを利用する
