@@ -11,8 +11,8 @@ cp -af env-dev-laradock laradock/.env
 cd laradock
 docker-compose up -d apache2 mysql phpmyadmin php-fpm
 
-open -a Firefox http://localhost
-open -a Firefox http://localhost:8080
+### open -a Firefox http://localhost
+### open -a Firefox http://localhost:8080
 ### open -a Firefox http://localhost:3000
 
 ## docker-compose exec --user=laradock workspace npm install;npm run dev

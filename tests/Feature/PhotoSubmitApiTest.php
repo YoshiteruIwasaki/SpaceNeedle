@@ -19,24 +19,17 @@ class PhotoSubmitApiTest extends PassportTestCase
      */
     public function testPhotoUpload()
     {
-        // S3ではなくテスト用のストレージを使用する
-        // → storage/framework/testing
         Storage::fake('avatars');
-
+        $uploadedFile = UploadedFile::fake()->image('photo.jpg');
         $response = $this->withHeaders($this->headersWithToken)
               ->json('POST', route('photo.create'), [
         // ダミーファイルを作成して送信している
-                 'photo' => UploadedFile::fake()->image('photo.jpg'),
+                 'photo' => $uploadedFile,
                ]);
 
         //Log::error($response->json());
 
         // レスポンスが201(CREATED)であること
         $response->assertStatus(201);
-
-        $photo = Photo::first();
-
-        // DBに挿入されたファイル名のファイルがストレージに保存されていること
-        Storage::disk('local')->assertExists($photo->filename);
     }
 }

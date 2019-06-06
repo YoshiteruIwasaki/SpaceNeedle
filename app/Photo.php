@@ -19,6 +19,7 @@ class Photo extends Model
     'id',
     'owner',
     'url',
+    'comments',
     ];
 
     /** JSONに含めない属性 */
@@ -30,18 +31,27 @@ class Photo extends Model
     //];
 
     /**
- * リレーションシップ - usersテーブル
- * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
- */
+    * リレーションシップ - usersテーブル
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
     public function owner()
     {
         return $this->belongsTo('App\User', 'user_id', 'id', 'users');
     }
 
     /**
- * アクセサ - url
- * @return string
- */
+     * リレーションシップ - commentsテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment')->orderBy('id', 'desc');
+    }
+
+    /**
+    * アクセサ - url
+    * @return string
+    */
     public function getUrlAttribute()
     {
         return Storage::url($this->attributes['filename']);

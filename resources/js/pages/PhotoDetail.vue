@@ -20,14 +20,45 @@
         <i class="icon ion-md-arrow-round-down" />Download
       </a>
       <h2 class="photo-detail__title">
-        <i class="icon ion-md-chatboxes" />Comments
-      </h2>
+  <i class="icon ion-md-chatboxes" />Comments
+</h2>
+<ul v-if="photo.comments.length > 0" class="photo-detail__comments">
+  <li
+    v-for="comment in photo.comments"
+    :key="comment.content"
+    class="photo-detail__commentItem">
+    <p class="photo-detail__commentBody">
+      {{ comment.content }}
+    </p>
+    <p class="photo-detail__commentInfo">
+      {{ comment.author.name }}
+    </p>
+  </li>
+</ul>
+<p v-else>
+No comments yet.
+</p>
+<form v-if="isLogin" class="form" @submit.prevent="addComment">
+    <div v-if="commentErrors" class="errors">
+    <ul v-if="commentErrors.content">
+      <li v-for="msg in commentErrors.content" :key="msg">
+{{ msg }}
+</li>
+    </ul>
+  </div>
+  <textarea v-model="commentContent" class="form__item" />
+  <div class="form__button">
+    <button type="submit" class="button button--inverse">
+submit comment
+</button>
+  </div>
+</form>
     </div>
   </div>
 </template>
 
 <script>
-import { OK } from '../util';
+import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util';
 
 export default {
   props: {
@@ -39,6 +70,8 @@ export default {
   data() {
     return {
       photo: null,
+      commentContent: '',
+      commentErrors: null,
       fullWidth: false,
     };
   },
@@ -52,6 +85,34 @@ export default {
       }
 
       this.photo = response.data;
+    },
+    async addComment() {
+      const response = await axios.post(`/api/photos/${this.id}/comments`, {
+        content: this.commentContent,
+      });
+
+      // バリデーションエラー
+      if (response.status === UNPROCESSABLE_ENTITY) {
+        this.commentErrors = response.data.errors;
+        return false;
+      }
+
+      this.commentContent = '';
+      // エラーメッセージをクリア
+      this.commentErrors = null;
+
+      // その他のエラー
+      if (response.status !== CREATED) {
+        this.$store.commit('error/setCode', response.status);
+        return false;
+      }
+      this.$set(this.photo, 'comments', [
+        response.data,
+        ...this.photo.comments,
+      ]);
+    },
+    isLogin() {
+      return this.$store.getters['auth/check'];
     },
   },
   watch: {
