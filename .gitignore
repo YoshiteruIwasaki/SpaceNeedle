@@ -84,6 +84,6 @@ local.properties
 #######################
 package-lock.json
 yarn.lock
-composer.lock
+##composer.lock
 public/js/app.js
 public/mix-manifest.json
