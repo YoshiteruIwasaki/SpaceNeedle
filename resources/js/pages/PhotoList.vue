@@ -69,14 +69,8 @@ export default {
         return false;
       }
 
-      console.log('=============');
-      console.log(response.data);
 
       this.photos = this.photos.map((photo) => {
-        console.log('*************');
-        console.log(photo);
-        console.log(photo.id);
-        console.log(response.data.photo_id);
         if (photo.id === response.data.photo_id) {
           photo.likes_count += 1;
           photo.liked_by_user = true;
