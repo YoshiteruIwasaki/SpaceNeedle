@@ -26,7 +26,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+    'id', 'email', 'email_verified_at', 'password', 'remember_token','email_verified_at',
+    self::CREATED_AT, self::UPDATED_AT,
     ];
 
     /**
@@ -37,4 +38,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+    * リレーションシップ - photosテーブル
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function photos()
+    {
+        return $this->hasMany('App\Photo');
+    }
 }
