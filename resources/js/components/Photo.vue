@@ -2,12 +2,12 @@
   <div class="photo">
     <figure class="photo__wrapper">
       <img
-  ref="image"
-  class="photo__image"
-  :class="imageClass"
-  :src="item.url"
-  :alt="`Photo by ${item.owner.name}`"
-  @load="setAspectRatio">
+        ref="image"
+        class="photo__image"
+        :class="imageClass"
+        :src="item.url"
+        :alt="`Photo by ${item.owner.name}`"
+        @load="setAspectRatio">
     </figure>
     <RouterLink
       class="photo__overlay"
@@ -16,29 +16,24 @@
       <div class="photo__controls">
         <button
           class="photo__action photo__action--like"
-          title="Like photo">
-          <i class="icon ion-md-heart" />12
+          :class="{ 'photo__action--liked': item.liked_by_user }"
+          title="Like photo"
+          @click.prevent="like">
+          <i class="icon ion-md-heart" />{{ item.likes_count }}
         </button>
+        <a
+          class="photo__action"
+          title="Download photo"
+          :href="`/photos/${item.id}/download`"
+          @click.stop>
+          <i class="icon ion-md-arrow-round-down" />
+        </a>
+      </div>
+      <div class="photo__username">
+        {{ item.owner.name }}
       </div>
     </RouterLink>
-    <div class="photo__controls">
-    <button
-  class="photo__action photo__action--like"
-  title="Like photo">
-  <i class="icon ion-md-heart" />12
-</button>
-<a
-  class="photo__action"
-  title="Download photo"
-  :href="`/photos/${item.id}/download`"
-  @click.stop>
-  <i class="icon ion-md-arrow-round-down" />
-</a>
-</div>
-<div class="photo__username">
-  {{ item.owner.name }}
-</div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -76,6 +71,12 @@ export default {
       this.landscape = height / width <= 0.75;
       // 横長でなければ縦長
       this.portrait = !this.landscape;
+    },
+    like() {
+      this.$emit('like', {
+        id: this.item.id,
+        liked: this.item.liked_by_user,
+      });
     },
   },
   watch: {

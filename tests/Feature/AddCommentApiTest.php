@@ -14,7 +14,7 @@ class AddCommentApiTest extends PassportTestCase
     /**
      * @test
      */
-    public function should_コメントを追加できる()
+    public function testAddComment()
     {
         factory(Photo::class)->create();
         $photo = Photo::first();

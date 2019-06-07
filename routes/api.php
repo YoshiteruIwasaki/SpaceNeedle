@@ -38,3 +38,9 @@ Route::get('/photos/{id}', 'PhotoController@show')->name('photo.show');
 
 // コメント
 Route::middleware('auth:api')->post('/photos/{photo}/comments', 'PhotoController@addComment')->name('photo.comment');
+
+// いいね
+Route::middleware('auth:api')->put('/photos/{id}/like', 'PhotoController@like')->name('photo.like');
+
+// いいね解除
+Route::middleware('auth:api')->delete('/photos/{id}/like', 'PhotoController@unlike');
