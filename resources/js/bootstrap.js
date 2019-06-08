@@ -29,13 +29,11 @@ try {
 
 window.axios = require('axios');
 
-window.axios.defaults.baseURL = process.env.APP_URL;
+const { baseUrl } = window.CustomEnv;
 
-console.log('window.axios.defaults.baseURL');
-console.log(process.env.APP_URL);
-console.log(process.env);
-console.log(window.axios.defaults.baseURL);
-console.log(window.axios.defaults);
+if (baseUrl) {
+  window.axios.defaults.baseURL = baseUrl;
+}
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 

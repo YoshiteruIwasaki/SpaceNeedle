@@ -19,6 +19,7 @@
         <script>
             window.Laravel = {csrfToken: "{{ csrf_token() }}"};
             window.Client =  {id: {{ $client->id }}, secret: "{{$client->secret}}"};
+            window.CustomEnv = {baseUrl: "{{env('APP_URL')}}"}
         </script>
     </head>
     <body>
