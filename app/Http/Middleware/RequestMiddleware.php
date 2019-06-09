@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use DB;
 use Closure;
-use Illuminate\Http\Request;
 
 class RequestMiddleware
 {
@@ -19,13 +18,6 @@ class RequestMiddleware
     {
         if (in_array(app()->environment(), ["local", "development"])) {
             $this->writeLog($request);
-        }
-        if (in_array(app()->environment(), ["production"])) {
-            // for Proxies
-            Request::setTrustedProxies([$request->getClientIp()]);
-            if (!$request->isSecure()) {
-                return redirect()->secure($request->getRequestUri());
-            }
         }
         return $next($request);
     }
