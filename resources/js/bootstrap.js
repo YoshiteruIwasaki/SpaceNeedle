@@ -29,12 +29,6 @@ try {
 
 window.axios = require('axios');
 
-const { baseUrl } = window.CustomEnv;
-
-if (baseUrl) {
-  window.axios.defaults.baseURL = baseUrl;
-}
-
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.axios.interceptors.request.use((config) => {
