@@ -38,3 +38,8 @@ npm run watch
 
 ###  php artisan route:list
 ###  phpunit --testdox
+
+### heroku run php artisan migrate:refresh -a spaceneedles
+### heroku run php artisan passport:install -a spaceneedles
+### heroku run bash -a spaceneedles
+### heroku logs --tail -a spaceneedles
