@@ -31,6 +31,8 @@ jobs:
       #- run: sudo apt-get install software-properties-common && sudo add-apt-repository -y ppa:ondrej/php && sudo apt update && sudo apt install zlib1g-dev libsqlite3-dev php7.2-bcmath php7.2-intl
       - run: sudo apt update && sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip bcmath
+      - run: chmod -R 777 storage
+      #- run: cp .env.example .env
 
       # Download and cache dependencies
       - restore_cache:
@@ -57,12 +59,20 @@ jobs:
             - node_modules
 
       # prepare the database
+      - run: npm run production
       - run: touch storage/testing.sqlite
       - run: php artisan migrate --env=testing --database=sqlite_testing --force
       - run: php artisan passport:keys
-      - run: php artisan serve --port=80
 
       # run tests with phpunit or codecept
-      - run: ./vendor/bin/phpunit
+      #- run: ./vendor/bin/phpunit
       #- run: ./vendor/bin/codecept build
       #- run: ./vendor/bin/codecept run
+      - run:
+          command: |
+            mkdir -p /phpunit &&
+            php -dzend_extension=xdebug.so ./vendor/bin/phpunit --coverage-clover=phpunit/coverage-clover.xml --coverage-html=phpunit/coverage
+      - store_test_results:
+          path: /phpunit
+      - store_artifacts:
+          path: /phpunit
