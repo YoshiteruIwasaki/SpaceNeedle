@@ -45,7 +45,7 @@ jobs:
           keys:
             - node-v1-{{ checksum "package.json" }}
             - node-v1-
-      - run: yarn install
+      - run: npm install
       - save_cache:
           key: node-v1-{{ checksum "package.json" }}
           paths:
@@ -57,7 +57,7 @@ jobs:
       - run: chmod -R 777 storage
       - run: php artisan storage:link
       - run: touch storage/testing.sqlite
-      - run: php artisan passport:keys
+      - run: php artisan passport:keys --force
       - run: php artisan migrate --env=testing --database=sqlite_testing --force
 
       # run tests with phpunit or codecept
