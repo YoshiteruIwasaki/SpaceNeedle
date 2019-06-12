@@ -53,7 +53,11 @@ jobs:
 
       # prepare the database
       - run: npm run production
+      - run: php artisan clear-compiled
       - run: chmod -R 777 storage
+      - run: php artisan storage:link
+      - run: echo \"$PASSPORT_PRIVATE_KEY\" > storage/oauth-private.key
+      - run: echo \"$PASSPORT_PUBLIC_KEY\" > storage/oauth-public.key
       - run: touch storage/testing.sqlite
       - run: php artisan migrate --env=testing --database=sqlite_testing --force
       - run: php artisan passport:keys
